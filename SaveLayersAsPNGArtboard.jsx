@@ -13,16 +13,19 @@ if (document && folder) {
 	options.transparency = true;
 	options.artBoardClipping = true;
 	// strips from exported filename
-	var strip = / Image$|th-/;
+	var strip = [' Image', 'th-'];
 
 	hideAllLayers();
 	var n = document.layers.length;
-	for (var i = 0; i < n; ++i) {
+	for (var i = 0; i < 5; ++i) {
 		var layer = document.layers[i];
 		layer.visible = true;
 
-		var filename = layer.name.replace(strip, '') + ".png";
-		var file = new File(folder.fsName + "/" + filename);
+		var filename = layer.name;
+		for (var j = 0; j < strip.length; j++) {
+			filename = filename.replace(strip[j], '');
+		}
+		var file = new File(folder.fsName + "/" + filename + ".png");
 
 		document.exportFile(file, ExportType.PNG24, options);
 		layer.visible = false;
