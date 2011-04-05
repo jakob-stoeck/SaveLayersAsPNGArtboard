@@ -1,6 +1,9 @@
 /**
  * @author Niels Bosma (niels.bosma@motorola.com)
- * some performance by Jakob Stoeck
+ * some enhancements by Jakob Stoeck
+ *
+ * usage: put in Application Directory/presets/en_US/Scripts/
+ * Available in scripts menu
  */
 var folder = Folder.selectDialog();
 var document = app.activeDocument;
@@ -9,7 +12,7 @@ if (document && folder) {
 	options.antiAliasing = true;
 	options.transparency = true;
 	options.artBoardClipping = true;
-	// strips from exported filename with regex
+	// strips from exported filename
 	var strip = / Image$|th-/;
 
 	hideAllLayers();
