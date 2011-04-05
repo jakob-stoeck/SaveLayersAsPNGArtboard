@@ -1,54 +1,48 @@
 /**
-* @author Niels Bosma (niels.bosma@motorola.com
-*/
-
+ * @author Niels Bosma (niels.bosma@motorola.com)
+ * some performance by Jakob Stoeck
+ */
 var folder = Folder.selectDialog();
 var document = app.activeDocument;
-if(document && folder)
-{	
+if (document && folder) {
 	var options = new ExportOptionsPNG24();
 	options.antiAliasing = true;
 	options.transparency = true;
-	
+	options.artBoardClipping = true;
+	// strips from exported filename with regex
+	var strip = / Image$|th-/;
+
+	hideAllLayers();
 	var n = document.layers.length;
-	for(var i=0; i<n; ++i)
-	{
-		hideAllLayers();
+	for (var i = 0; i < n; ++i) {
 		var layer = document.layers[i];
 		layer.visible = true;
 
-		var file = new File(folder.fsName+"/"+layer.name+".png");
-		
-		var options = new ExportOptionsPNG24();
-		options.artBoardClipping = true;
-		
-		document.exportFile(file,ExportType.PNG24,options);
-		
+		var filename = layer.name.replace(strip, '') + ".png";
+		var file = new File(folder.fsName + "/" + filename);
 
+		document.exportFile(file, ExportType.PNG24, options);
+		layer.visible = false;
 	}
-	
-	showAllLayers();
 }
 
-function hideAllLayers()
-{
-	forEach(document.layers, function(layer) {
+function hideAllLayers() {
+	forEach(document.layers,
+	function(layer) {
 		layer.visible = false;
 	});
 }
 
-function showAllLayers()
-{
-	forEach(document.layers, function(layer) {
+function showAllLayers() {
+	forEach(document.layers,
+	function(layer) {
 		layer.visible = true;
-	});		
+	});
 }
 
-function forEach(collection, fn)
-{
+function forEach(collection, fn) {
 	var n = collection.length;
-	for(var i=0; i<n; ++i)
-	{
+	for (var i = 0; i < n; ++i) {
 		fn(collection[i]);
 	}
 }
