@@ -17,7 +17,7 @@ if (document && folder) {
 
 	hideAllLayers();
 	var n = document.layers.length;
-	for (var i = 0; i < 5; ++i) {
+	for (var i = 0; i < n; ++i) {
 		var layer = document.layers[i];
 		layer.visible = true;
 
